@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styles from '../../styles/Login.module.css';
 import Link from 'next/link';
+import Button from '@mui/material/Button';
+
 const Forgot = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -66,7 +68,10 @@ const Forgot = () => {
         </div>
         <div className={styles.button_container}>
           {/* <input type="submit" /> */}
-          <button onClick={handleSubmit}>RESET YOUR PASSWORD</button>
+          {/* <button onClick={handleSubmit}>RESET YOUR PASSWORD</button> */}
+          <Button variant="contained" color="primary">
+            RESET YOUR PASSWORD
+          </Button>
         </div>
         <div className={styles.button_container}>
           <p>

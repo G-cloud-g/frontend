@@ -4,20 +4,18 @@ import Button from '@mui/material/Button';
 import styles from '../../styles/Login.module.css';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import StudentPage from './Studentsignupform';
 const baseURL = 'http://localhost:3001';
-const Login = () => {
+const StudentPage = () => {
   const dispatch = useDispatch();
   const [errorMessages, setErrorMessages] = useState({});
   const [user, setUser] = useState({});
-  const [val, setVal] = useState(0);
-
+  const [val] = useState(0);
   const errors = {
     uname: 'invalid username',
     pass: 'invalid password',
   };
   useEffect(() => {
-    if (val === 1) {
+    if (val === 0) {
       setUser({});
       setErrorMessages({});
       console.log('data cc', user);
@@ -77,6 +75,11 @@ const Login = () => {
     }
   };
 
+  // Generate JSX code for error message
+  const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <div className={styles.error}>{errorMessages.message}</div>
+    );
   const validateFn = () => {
     const catenameErr = {};
     let isValid = true;
@@ -103,69 +106,63 @@ const Login = () => {
     return isValid;
   };
 
-  // console.log('users', user);
-  const renderForm = (
+  return (
     <div className={styles.form}>
       <form onSubmit={handleSubmit}>
         <div className={styles.input_container}>
-          <label>Name </label>
-          <input
-            type="text"
-            name="name"
-            required
-            value={user.name}
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            autoComplete="off"
-          />
-          <div className={styles.error}>{errorMessages.name}</div>
+          <label>First name </label>
+          <input type="text" name="fname" required autoComplete="off" />
+          {renderErrorMessage('uname1')}
+        </div>
+        <div className={styles.input_container}>
+          <label>Last name </label>
+          <input type="text" name="lname" required autoComplete="off" />
+          {renderErrorMessage('uname1')}
         </div>
         <div className={styles.input_container}>
           <label>Username </label>
-          <input
-            type="text"
-            value={user.uname}
-            name="uname"
-            required
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            autoComplete="off"
-          />
-          <div className={styles.error}>{errorMessages.uname}</div>
+          <input type="text" name="uname1" required autoComplete="off" />
+          {renderErrorMessage('uname1')}
         </div>
         <div className={styles.input_container}>
           <label>Email </label>
-          <input
-            value={user.email}
-            type="text"
-            name="email"
-            required
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            autoComplete="off"
-          />
-          <div className={styles.error}>{errorMessages.email}</div>
+          <input type="text" name="email1" required autoComplete="off" />
+          {renderErrorMessage('email1')}
+        </div>
+        <div className={styles.input_container}>
+          <label>Phone number </label>
+          <input type="text" name="phone" required autoComplete="off" />
+          {renderErrorMessage('phone')}
         </div>
         <div className={styles.input_container}>
           <label>Password </label>
-          <input
-            value={user.pass}
-            type="password"
-            name="pass"
-            required
-            onChange={(e) =>
-              setUser({ ...user, [e.target.name]: e.target.value })
-            }
-            autoComplete="off"
-          />
-          <div className={styles.error}>{errorMessages.pass}</div>
+          <input type="password" name="pass1" required autoComplete="off" />
+          {renderErrorMessage('pass1')}
+        </div>
+
+        <div className={styles.input_container}>
+          <label>Interest area</label>
+          <input type="text" name="area" required autoComplete="off" />
+          {renderErrorMessage('area')}
+        </div>
+        <div className={styles.input_container}>
+          <label>Address </label>
+          <input type="text" name="address" required autoComplete="off" />
+          {renderErrorMessage('address')}
+        </div>
+        <div className={styles.input_container}>
+          <label>Qualification </label>
+          <input type="text" name="qualification" required autoComplete="off" />
+          {renderErrorMessage('qualification')}
+        </div>
+        <div className={styles.input_container}>
+          <label>Technology </label>
+          <input type="text" name="technology" required autoComplete="off" />
+          {renderErrorMessage('technology')}
         </div>
         <div className={styles.button_container}>
           {/* <input type="submit" /> */}
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary">
             CREATE ACCOUNT
           </Button>
         </div>
@@ -175,40 +172,6 @@ const Login = () => {
       </form>
     </div>
   );
-  return (
-    <div className={styles.app}>
-      <div className={val === 0 ? styles.login_form1 : styles.login_form}>
-        <div className={styles.title}>
-          <span
-            style={{
-              color: val === 0 && 'blue',
-              borderBottom: val === 0 && '1px solid blue',
-            }}
-            onClick={() => setVal(0)}
-          >
-            Student Signup
-          </span>
-          &nbsp;
-          <span
-            style={{
-              color: val === 1 && 'blue',
-              borderBottom: val === 1 && '1px solid blue',
-            }}
-            onClick={() => setVal(1)}
-          >
-            Expert Signup
-          </span>
-        </div>
-        {val === 0 ? (
-          //   <h1>student signui</h1>
-          <StudentPage />
-        ) : (
-          //   <h1>Expert signui</h1>
-          renderForm
-        )}
-      </div>
-    </div>
-  );
 };
 
-export default Login;
+export default StudentPage;

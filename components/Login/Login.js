@@ -1,92 +1,57 @@
 import { useState } from 'react';
 import styles from '../../styles/Login.module.css';
 import Link from 'next/link';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import StudentLogin from './StudentLogin';
+import ExpertLogin from './ExpertLogin';
 const Login = () => {
   const [errorMessages, setErrorMessages] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessages1, setErrorMessages1] = useState({});
+  const [Student, setStudent] = useState({ uname: '', pass: '' });
+  const [Expert, setExpert] = useState({ uname: '', pass: '' });
   const [val, setVal] = useState(0);
-  // User Login info
-  const database = [
-    {
-      username: 'user1',
-      password: 'pass1',
-    },
-    {
-      username: 'user2',
-      password: 'pass2',
-    },
-  ];
-
-  const errors = {
-    uname: 'invalid username',
-    pass: 'invalid password',
-  };
-
-  const handleSubmit = (event) => {
-    //Prevent page reload
-    event.preventDefault();
-
-    var { uname, pass } = document.forms[0];
-
-    // Find user login info
-    const userData = database.find((user) => user.username === uname.value);
-
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: 'pass', message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-      }
-    } else {
-      // Username not found
-      setErrorMessages({ name: 'uname', message: errors.uname });
-    }
-  };
-  // Generate JSX code for error message
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className={styles.error}>{errorMessages.message}</div>
-    );
 
   // JSX code for login form
-  const renderForm = (
-    <div className={styles.form}>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.input_container}>
-          <label>Username </label>
-          <input type="text" name="uname" required />
-          {renderErrorMessage('uname')}
-        </div>
-        <div className={styles.input_container}>
-          <label>Password </label>
-          <input type="password" name="pass" required />
-          {renderErrorMessage('pass')}
-        </div>
-        <div className={styles.button_container}>
-          <input type="submit" />
-        </div>
-        <div className={styles.button_container}>
-          <p>
-            Create account{' '}
-            <Link href="/signup">
-              <a style={{ color: 'blue', textDecoration: 'underline' }}>
-                {/* {val === 0 ? 'Student' : 'Expert'} */} click here
-              </a>
-            </Link>
-          </p>
-          <p>
-            <Link href="/forgotpassword">
-              <a style={{ color: 'blue', textDecoration: 'underline' }}>
-                Forgot password?
-              </a>
-            </Link>
-          </p>
-        </div>
-      </form>
-    </div>
-  );
+  // const renderForm = (
+  //   <div className={styles.form}>
+  //     <form onSubmit={handleSubmit}>
+  //       <div className={styles.input_container}>
+  //         <label>Username </label>
+  //         <input type="text" name="uname" required />
+  //         {renderErrorMessage('uname')}
+  //       </div>
+  //       <div className={styles.input_container}>
+  //         <label>Password </label>
+  //         <input type="password" name="pass" required />
+  //         {renderErrorMessage('pass')}
+  //       </div>
+  //       <div className={styles.button_container}>
+  //         {/* <input type="submit" /> */}
+  //         <Button variant="contained" color="primary">
+  //           Login
+  //         </Button>
+  //       </div>
+  //       <div className={styles.button_container}>
+  //         <p>
+  //           Create account{' '}
+  //           <Link href="/signup">
+  //             <a style={{ color: 'blue', textDecoration: 'underline' }}>
+  //               {/* {val === 0 ? 'Student' : 'Expert'} */} click here
+  //             </a>
+  //           </Link>
+  //         </p>
+  //         <p>
+  //           <Link href="/forgotpassword">
+  //             <a style={{ color: 'blue', textDecoration: 'underline' }}>
+  //               Forgot password?
+  //             </a>
+  //           </Link>
+  //         </p>
+  //       </div>
+  //     </form>
+  //   </div>
+  // );
   return (
     <div className={styles.app}>
       <div className={styles.login_form}>
@@ -111,7 +76,25 @@ const Login = () => {
             Expert Login
           </span>
         </div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {val === 0 ? (
+          <StudentLogin
+            val={val}
+            setVal={setVal}
+            Student={Student}
+            setStudent={setStudent}
+            errorMessages={errorMessages}
+            setErrorMessages={setErrorMessages}
+          />
+        ) : (
+          <ExpertLogin
+            val={val}
+            setVal={setVal}
+            Expert={Expert}
+            setExpert={setExpert}
+            errorMessages1={errorMessages1}
+            setErrorMessages1={setErrorMessages1}
+          />
+        )}
       </div>
     </div>
   );
