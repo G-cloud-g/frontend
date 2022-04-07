@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../../styles/Login.module.css';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
@@ -11,7 +11,17 @@ const Login = () => {
   const [Student, setStudent] = useState({ uname: '', pass: '' });
   const [Expert, setExpert] = useState({ uname: '', pass: '' });
   const [val, setVal] = useState(0);
-
+  useEffect(() => {
+    if (!val === 0) {
+      setExpert({ uname: '', pass: '' });
+      setErrorMessages1({});
+      console.log('data cc', Expertr1);
+    } else {
+      setStudent({ uname: '', pass: '' });
+      setErrorMessages({});
+      console.log('data cc', Student);
+    }
+  }, [val]);
   // JSX code for login form
   // const renderForm = (
   //   <div className={styles.form}>

@@ -11,16 +11,17 @@ const Login = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [user, setUser] = useState({});
   const [val, setVal] = useState(0);
-
-  const errors = {
-    uname: 'invalid username',
-    pass: 'invalid password',
-  };
+  const [user1, setUser1] = useState({});
+  const [errorMessages1, setErrorMessages1] = useState({});
   useEffect(() => {
-    if (val === 1) {
+    if (!val === 0) {
       setUser({});
       setErrorMessages({});
       console.log('data cc', user);
+    } else {
+      setUser1({});
+      setErrorMessages({});
+      console.log('data cc', user1);
     }
   }, [val]);
   const handleSubmit = () => {
@@ -201,7 +202,13 @@ const Login = () => {
         </div>
         {val === 0 ? (
           //   <h1>student signui</h1>
-          <StudentPage />
+          <StudentPage
+            val={val}
+            user1={user1}
+            setUser1={setUser1}
+            errorMessages1={errorMessages1}
+            setErrorMessages1={setErrorMessages1}
+          />
         ) : (
           //   <h1>Expert signui</h1>
           renderForm
