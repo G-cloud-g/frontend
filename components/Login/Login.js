@@ -3,8 +3,8 @@ import styles from '../../styles/Login.module.css';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import StudentLogin from './StudentLogin';
-import ExpertLogin from './ExpertLogin';
+import StudentLogin from './Student/StudentLogin';
+import ExpertLogin from './Expert/ExpertLogin';
 const Login = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [errorMessages1, setErrorMessages1] = useState({});
@@ -15,11 +15,11 @@ const Login = () => {
     if (!val === 0) {
       setExpert({ uname: '', pass: '' });
       setErrorMessages1({});
-      console.log('data cc', Expertr1);
+      // console.log('data cc', Expertr1);
     } else {
       setStudent({ uname: '', pass: '' });
       setErrorMessages({});
-      console.log('data cc', Student);
+      // console.log('data cc', Student);
     }
   }, [val]);
   // JSX code for login form

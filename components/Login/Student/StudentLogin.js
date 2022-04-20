@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import styles from '../../styles/Login.module.css';
+import styles from '../../../styles/Login.module.css';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -43,8 +43,16 @@ const StudentLogin = (props) => {
                 type: 'success',
               },
             });
+            const userData = response?.data;
+            const cloneUser = (({ token, ...d }) => d)(userData);
+            dispatch({
+              type: 'UPDATE_USERDATA',
+              payload: cloneUser,
+            });
             let token = response?.data?.token;
+            let userType = response?.data?.UserType;
             localStorage.setItem('token', token);
+            localStorage.setItem('UserType', userType);
             router.push('/dashboard');
           })
           .catch((err) => {
@@ -122,7 +130,7 @@ const StudentLogin = (props) => {
             </Link>
           </p>
           <p>
-            <Link href="/forgotpassword">
+            <Link href="/forgotpass/student">
               <a style={{ color: 'blue', textDecoration: 'underline' }}>
                 Forgot password?
               </a>

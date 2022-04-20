@@ -1,56 +1,93 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../../styles/Login.module.css';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
-
-const Forgot = () => {
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+const Forgot = (props) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { user } = props;
+  const [type, setType] = useState(null);
+  const [email, setEmail] = useState('');
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   // const [val, setVal] = useState(0);
   // User Login info
-  const database = [
-    {
-      username: 'user1',
-      password: 'pass1',
-    },
-    {
-      username: 'user2',
-      password: 'pass2',
-    },
-  ];
+  useEffect(() => {
+    setType(user);
+  }, [user]);
+  // 625d3a9a1f9269478f944573
 
-  const errors = {
-    uname: 'invalid username',
-    pass: 'invalid password',
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     //Prevent page reload
     event.preventDefault();
+    // console.log('url ', process.env.NEXT_PUBLIC_BASEURL_API);
+    if (type === 'student') {
+      await axios
+        .post(
+          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/student/forgotpwd`,
+          { email }
+          // user,
+        )
+        .then((response) => {
+          // console.log('response ', response.data);
 
-    var { uname, pass } = document.forms[0];
-
-    // Find user login info
-    const userData = database.find((user) => user.username === uname.value);
-
-    // Compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
-        // Invalid password
-        setErrorMessages({ name: 'pass', message: errors.pass });
-      } else {
-        setIsSubmitted(true);
-      }
+          dispatch({
+            type: 'UPDATE_SNACK',
+            payload: {
+              snackbar: true,
+              message: response.data.message,
+              type: 'success',
+            },
+          });
+          router.push(`/reset/${type}`);
+        })
+        .catch((err) => {
+          // console.log('err.response ', err.response);
+          dispatch({
+            type: 'UPDATE_SNACK',
+            payload: {
+              snackbar: true,
+              message: err.response?.data?.error,
+              type: 'error',
+            },
+          });
+        });
     } else {
-      // Username not found
-      setErrorMessages({ name: 'uname', message: errors.uname });
+      await axios
+        .post(
+          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/expert/forgotpwd`,
+          { email }
+          // user,
+        )
+        .then((response) => {
+          // console.log('response ', response.data);
+
+          dispatch({
+            type: 'UPDATE_SNACK',
+            payload: {
+              snackbar: true,
+              message: response.data.message,
+              type: 'success',
+            },
+          });
+          router.push(`/reset/${type}`);
+        })
+        .catch((err) => {
+          // console.log('err.response ', err.response);
+          dispatch({
+            type: 'UPDATE_SNACK',
+            payload: {
+              snackbar: true,
+              message: err.response?.data?.msg,
+              type: 'error',
+            },
+          });
+        });
     }
   };
-  // Generate JSX code for error message
-  const renderErrorMessage = (name) =>
-    name === errorMessages.name && (
-      <div className={styles.error}>{errorMessages.message}</div>
-    );
 
   // JSX code for login form
   const renderForm = (
@@ -63,14 +100,21 @@ const Forgot = () => {
             name="email"
             placeholder="Enter your email"
             required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          {renderErrorMessage('uname')}
+          {/* {renderErrorMessage('uname')} */}
         </div>
         <div className={styles.button_container}>
           {/* <input type="submit" /> */}
           {/* <button onClick={handleSubmit}>RESET YOUR PASSWORD</button> */}
-          <Button variant="contained" color="primary">
-            RESET YOUR PASSWORD
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={email ? false : true}
+            onClick={handleSubmit}
+          >
+            Generate Your OTP
           </Button>
         </div>
         <div className={styles.button_container}>
