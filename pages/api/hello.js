@@ -2,6 +2,6 @@
 
 export default function handler(req, res) {
   const data = res.status(200).json({ name: 'John Doe' });
-  console.log('data ', data);
+  // console.log('data ', data);
   return <h1>welcome {data}</h1>;
 }

@@ -1,3 +1,4 @@
+import Header from '../components/Header';
 import Login from '../components/Login/Login';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { useEffect } from 'react';
@@ -18,6 +19,7 @@ export default function Home() {
 
   return (
     <>
+      <Header />
       <Login />
     </>
   );

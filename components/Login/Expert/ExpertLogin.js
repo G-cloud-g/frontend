@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from '../../styles/Login.module.css';
+import styles from '../../../styles/Login.module.css';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -26,10 +26,10 @@ const ExpertLogin = (props) => {
       if (val === 1) {
         const { uname, pass } = Expert;
         const userdata = {
-          username: uname,
+          UserName: uname,
           password: pass,
         };
-        console.log('expert cred ', Expert);
+        // console.log('expert cred ', userdata);
 
         await axios
           .post(
@@ -45,6 +45,12 @@ const ExpertLogin = (props) => {
                 message: 'Login successfully',
                 type: 'success',
               },
+            });
+            const userData = response?.data;
+            const cloneUser = (({ token, ...d }) => d)(userData);
+            dispatch({
+              type: 'UPDATE_USERDATA',
+              payload: cloneUser,
             });
             let token = response?.data?.token;
             localStorage.setItem('token', token);
@@ -68,12 +74,12 @@ const ExpertLogin = (props) => {
   const validateFn = () => {
     const catenameErr = {};
     let isValid = true;
-    if (Expert.uname.trim().length < 4) {
+    if (Expert.uname.trim().length < 1) {
       isValid = false;
       catenameErr.uname =
         'Please enter valid username or length greater than 4';
     }
-    if (Expert.pass.trim().length < 5) {
+    if (Expert.pass.trim().length < 1) {
       isValid = false;
       catenameErr.uname =
         'Please enter valid password or length greater than 5';
@@ -95,6 +101,7 @@ const ExpertLogin = (props) => {
             name="uname"
             required
             autoComplete="off"
+            placeholder="username"
           />
         </div>
         <div className={styles.input_container}>
@@ -107,6 +114,7 @@ const ExpertLogin = (props) => {
             }
             name="pass"
             required
+            placeholder="password"
             autoComplete="off"
           />
         </div>
@@ -126,7 +134,7 @@ const ExpertLogin = (props) => {
             </Link>
           </p>
           <p>
-            <Link href="/forgotpassword">
+            <Link href="/forgotpass/expert">
               <a style={{ color: 'blue', textDecoration: 'underline' }}>
                 Forgot password?
               </a>
