@@ -26,7 +26,7 @@ const Header = () => {
       setUserType(localStorage.getItem('UserType'));
     }
     // else router.push('/');
-    console.log('type user ', userType);
+    // console.log('type user ', userType);
     setOpen(localStorage.getItem('token') === null);
   }, [userType]);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -57,7 +57,14 @@ const Header = () => {
   //   }
   // };
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{
+        // background: 'rgb(2,0,36)',
+        background:
+          'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,14,146,0.8018557764902836) 41%, rgba(0,212,255,1) 100%)',
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar
           disableGutters
@@ -145,21 +152,29 @@ const Header = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {open ? (
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{ color: '#fff' }}
-                onClick={() => router.push('/AdminLogin')}
-              >
-                Admin Login
-              </Button>
+              !(router.pathname === '/EmployeeLogin') && (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{ color: '#fff' }}
+                  onClick={() =>
+                    router.pathname === '/'
+                      ? router.push('/AdminLogin')
+                      : router.push('/EmployeeLogin')
+                  }
+                >
+                  {router.pathname === '/'
+                    ? 'Admin or Employee login'
+                    : 'Employee login'}
+                </Button>
+              )
             ) : (
               <>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
                       alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
+                      // src="/static/images/avatar/2.jpg"
                     />
                   </IconButton>
                 </Tooltip>
@@ -191,7 +206,7 @@ const Header = () => {
                     <MenuItem
                       onClick={() => {
                         handleCloseUserMenu();
-                        router.push('/profile');
+                        router.push('/createEmployee');
                       }}
                     >
                       <Typography textAlign="center">
