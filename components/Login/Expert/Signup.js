@@ -58,7 +58,7 @@ const Login = () => {
           // user,
         )
         .then((response) => {
-          console.log('expt resp', response);
+          // console.log('expt resp', response);
           dispatch({
             type: 'UPDATE_SNACK',
             payload: {

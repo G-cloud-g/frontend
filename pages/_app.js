@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import store from '/src/Redux/store';
 import SnackBar from '/src/utils/SnackBar';
 import { useRouter } from 'next/router';
+import '../node_modules/react-perfect-scrollbar/dist/css/styles.css';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -17,9 +18,8 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      router.push('/');
-    }
+    if (!localStorage.getItem('token')) router.push('/');
+    else router.push('/dashboard');
   }, []);
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 

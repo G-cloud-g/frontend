@@ -54,7 +54,7 @@ export default function SignIn() {
       };
       await axios
         .post(
-          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/admin/login`,
+          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/Employee/login`,
           userdata
           // user,
         )
@@ -97,12 +97,12 @@ export default function SignIn() {
     if (uname.trim().length < 3) {
       isValid = false;
       catenameErr.uname =
-        'Please enter valid username or length greater than 4';
+        'Please enter valid username or length greater than 3';
     }
     if (pass.trim().length < 3) {
       isValid = false;
       catenameErr.uname =
-        'Please enter valid password or length greater than 5';
+        'Please enter valid password or length greater than 3';
     }
     setErrorMessages(catenameErr);
     return isValid;
@@ -123,7 +123,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Admin Login
+            Employee Login
           </Typography>
           <Box
             component="form"

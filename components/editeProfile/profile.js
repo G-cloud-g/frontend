@@ -32,7 +32,6 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
-import '../../node_modules/react-perfect-scrollbar/dist/css/styles.css';
 import isMobilePhone from '../../node_modules/validator/es/lib/isMobilePhone';
 import isEmail from '../../node_modules/validator/es/lib/isEmail';
 /* eslint-disable */
