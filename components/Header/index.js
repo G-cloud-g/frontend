@@ -61,6 +61,7 @@ const Header = () => {
       position="static"
       sx={{
         // background: 'rgb(2,0,36)',
+        zIndex: 99,
         background:
           'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(14,14,146,0.8018557764902836) 41%, rgba(0,212,255,1) 100%)',
       }}

@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import store from '/src/Redux/store';
+import axios from 'axios';
 // import UserIcon from 'assets/icons/User';
 import { createStyles, makeStyles } from '@mui/styles';
 // import isMobilePhone from 'validator/es/lib/isMobilePhone';
@@ -155,6 +156,7 @@ const ProfileSettings = () => {
   const [showpassword1, setShowPassword1] = useState(false);
   const [showpassword2, setShowPassword2] = useState(false);
   const [profileimg, setProfileImg] = useState();
+  const [userType, setUserType] = useState('');
 
   //   const { profileimg, setProfileImg } = props;
   // get userId from redux store
@@ -169,7 +171,7 @@ const ProfileSettings = () => {
       setfirstname(userData?.FirstName);
       setlastname(userData?.LastName);
       setphoneno(userData?.phone);
-      setemail(userData?.email);
+      setemail(userData?.email ? userData?.email : userData?.Email);
       setMfa(userData?.mfa);
       setinterestArea(userData?.Interestarea);
       setQualification(userData?.Qualification);
@@ -178,6 +180,20 @@ const ProfileSettings = () => {
       setTechnology(userData?.Technology);
     }
   }, [userData]);
+
+  useEffect(() => {
+    if (localStorage.getItem('UserType') == 0) {
+      setUserType('student');
+    } else if (localStorage.getItem('UserType') == 1) {
+      setUserType('expert');
+    } else if (localStorage.getItem('UserType') == 'admin') {
+      setUserType('admin');
+    } else if (localStorage.getItem('UserType') == 2) {
+      setUserType('employee');
+    }
+
+    // console.log('userType ', userType);
+  }, [userType]);
 
   //below function is written for show password after click on eye button
   const handleClickShowPassword = () => {
@@ -209,7 +225,7 @@ const ProfileSettings = () => {
   };
 
   //this function is used to update the user password
-  const handleUpdatePass = (currentpass, newpass, updatepass) => {
+  const handleUpdatePass = async (currentpass, newpass, updatepass) => {
     setcurrentpassworderr(false);
     setnewpassworderr(false);
     setcnfpassworderr(false);
@@ -262,23 +278,55 @@ const ProfileSettings = () => {
     if (hasErr) {
       return true;
     }
-    // if (currentpassword && newpassword && cnfpassword) {
-    //   UpdatePassword(user._id, newpass, currentpass)
-    //     .then((res) => {
-    //       setcurrentpassword('');
-    //       setnewpassword('');
-    //       setcnfpassword('');
-    //       setcurrentpassworderr(false);
-    //       setnewpassworderr(false);
-    //       setcnfpassworderr(false);
-    //       setcurrentpassworderr(false);
-    //       setnewpassworderr(false);
-    //       setcnfpassworderr(false);
-    //       Setdisplayupdatepass(false);
-    //     })
-    //     .catch((err) => {});
-    // } else {
-    // }
+    if (currentpassword && newpassword && cnfpassword) {
+      // UpdatePassword(user._id, newpass, currentpass)
+      const userdata = {
+        email: email,
+        current_password: currentpass,
+        newPassword: newpass,
+        confirm_Password: updatepass,
+      };
+      await axios
+        .post(
+          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/${userType}/changepwd`,
+          userdata
+          // user,
+        )
+        .then((response) => {
+          setcurrentpassword('');
+          setnewpassword('');
+          setcnfpassword('');
+          setcurrentpassworderr(false);
+          setnewpassworderr(false);
+          setcnfpassworderr(false);
+          setcurrentpassworderr(false);
+          setnewpassworderr(false);
+          setcnfpassworderr(false);
+          Setdisplayupdatepass(false);
+          console.log('resp ', response.data.msg);
+          dispatch({
+            type: 'UPDATE_SNACK',
+            payload: {
+              snackbar: true,
+              message: response.data.msg,
+              type: 'success',
+            },
+          });
+        })
+        .catch((err) => {
+          console.log('resp ', err.response);
+
+          dispatch({
+            type: 'UPDATE_SNACK',
+            payload: {
+              snackbar: true,
+              message: err.response?.data?.error,
+              type: 'error',
+            },
+          });
+        });
+    } else {
+    }
   };
 
   //this function is used to upload the image
@@ -423,12 +471,13 @@ const ProfileSettings = () => {
   return (
     <Box
       sx={{
-        marginTop: '0px',
+        marginTop: '10px',
         bgcolor: '#ccc',
         backgroundRepeat: 'no-repeat',
+        zIndex: 0,
         //   backgroundImage:'url(/image/newbg.png)',
         backgroundColor: (t) =>
-          t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          t.palette.mode === 'light' ? 'white' : 'white',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         zIndex: 1,

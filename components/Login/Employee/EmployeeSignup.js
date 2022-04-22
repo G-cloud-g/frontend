@@ -80,7 +80,7 @@ export default function Register(props) {
 
     const response = axios
       .post(
-        `http://${process.env.NEXT_PUBLIC_BASEURL_API}/Employee/signup`,
+        `http://${process.env.NEXT_PUBLIC_BASEURL_API}/employee/signup`,
         registerCredentials
         // user,
       )
