@@ -54,7 +54,7 @@ export default function SignIn() {
       };
       await axios
         .post(
-          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/Employee/login`,
+          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/employee/login`,
           userdata
           // user,
         )

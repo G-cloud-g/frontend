@@ -53,6 +53,8 @@ const ExpertLogin = (props) => {
               payload: cloneUser,
             });
             let token = response?.data?.token;
+            let userType = response?.data?.UserType;
+            localStorage.setItem('UserType', userType);
             localStorage.setItem('token', token);
             router.push('/dashboard');
           })
