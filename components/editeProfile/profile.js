@@ -423,12 +423,13 @@ const ProfileSettings = () => {
   return (
     <Box
       sx={{
-        marginTop: '0px',
+        marginTop: '10px',
         bgcolor: '#ccc',
         backgroundRepeat: 'no-repeat',
+        zIndex: 0,
         //   backgroundImage:'url(/image/newbg.png)',
         backgroundColor: (t) =>
-          t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          t.palette.mode === 'light' ? 'white' : 'white',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         zIndex: 1,
