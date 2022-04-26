@@ -186,7 +186,7 @@ const ProfileSettings = () => {
       setUserType('student');
     } else if (localStorage.getItem('UserType') == 1) {
       setUserType('expert');
-    } else if (localStorage.getItem('UserType') == 'admin') {
+    } else if (localStorage.getItem('UserType') == 'Admin') {
       setUserType('admin');
     } else if (localStorage.getItem('UserType') == 2) {
       setUserType('employee');
