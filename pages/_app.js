@@ -18,8 +18,9 @@ const clientSideEmotionCache = createEmotionCache();
 export default function MyApp(props) {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('token')) router.push('/');
+    if (!localStorage.getItem('token'));
     else router.push('/dashboard');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 

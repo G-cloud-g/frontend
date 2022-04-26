@@ -16,6 +16,7 @@ const StudentLogin = (props) => {
       setStudent({ uname: '', pass: '' });
       setErrorMessages({});
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [val]);
 
   const handleSubmit = async () => {

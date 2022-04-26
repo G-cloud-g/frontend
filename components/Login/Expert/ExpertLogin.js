@@ -17,6 +17,7 @@ const ExpertLogin = (props) => {
       setExpert({ uname: '', pass: '' });
       setErrorMessages1({});
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [val]);
 
   const handleSubmit = async () => {

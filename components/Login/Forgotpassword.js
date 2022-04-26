@@ -24,10 +24,10 @@ const Forgot = (props) => {
     //Prevent page reload
     event.preventDefault();
     // console.log('url ', process.env.NEXT_PUBLIC_BASEURL_API);
-    if (type === 'student') {
+    if (type) {
       await axios
         .post(
-          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/student/forgotpwd`,
+          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/${type}/forgotpwd`,
           { email }
           // user,
         )
@@ -55,38 +55,39 @@ const Forgot = (props) => {
             },
           });
         });
-    } else {
-      await axios
-        .post(
-          `http://${process.env.NEXT_PUBLIC_BASEURL_API}/expert/forgotpwd`,
-          { email }
-          // user,
-        )
-        .then((response) => {
-          // console.log('response ', response.data);
-
-          dispatch({
-            type: 'UPDATE_SNACK',
-            payload: {
-              snackbar: true,
-              message: response.data.message,
-              type: 'success',
-            },
-          });
-          router.push(`/reset/${type}`);
-        })
-        .catch((err) => {
-          // console.log('err.response ', err.response);
-          dispatch({
-            type: 'UPDATE_SNACK',
-            payload: {
-              snackbar: true,
-              message: err.response?.data?.msg,
-              type: 'error',
-            },
-          });
-        });
     }
+    // else {
+    //   await axios
+    //     .post(
+    //       `http://${process.env.NEXT_PUBLIC_BASEURL_API}/expert/forgotpwd`,
+    //       { email }
+    //       // user,
+    //     )
+    //     .then((response) => {
+    //       // console.log('response ', response.data);
+
+    //       dispatch({
+    //         type: 'UPDATE_SNACK',
+    //         payload: {
+    //           snackbar: true,
+    //           message: response.data.message,
+    //           type: 'success',
+    //         },
+    //       });
+    //       router.push(`/reset/${type}`);
+    //     })
+    //     .catch((err) => {
+    //       // console.log('err.response ', err.response);
+    //       dispatch({
+    //         type: 'UPDATE_SNACK',
+    //         payload: {
+    //           snackbar: true,
+    //           message: err.response?.data?.msg,
+    //           type: 'error',
+    //         },
+    //       });
+    //     });
+    // }
   };
 
   // JSX code for login form
