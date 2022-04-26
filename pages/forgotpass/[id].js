@@ -8,7 +8,7 @@ export default function Home() {
   // console.log('reser id ', id);
   return (
     <>
-      <Header />
+      <Header user={id} />
       <Forgotpassword user={id} />
     </>
   );

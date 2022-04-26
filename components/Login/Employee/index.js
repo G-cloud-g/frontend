@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import Link from 'next/link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,6 +15,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from '@mui/material';
 
 const Copyright = (props) => {
   return (
@@ -25,9 +32,7 @@ const Copyright = (props) => {
       {...props}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://www.oxcytech.com/">
-        Oxcytech System
-      </Link>{' '}
+      <Link href="https://www.oxcytech.com/">Oxcytech System</Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
@@ -40,7 +45,7 @@ export default function SignIn() {
   const [uname, setUname] = useState('');
   const [pass, setPass] = useState('');
   const [errorMessages, setErrorMessages] = useState({});
-
+  const [showpassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const handleSubmit = async (event) => {
@@ -107,6 +112,14 @@ export default function SignIn() {
     setErrorMessages(catenameErr);
     return isValid;
   };
+  //below function is written for show password after click on eye button
+  const handleClickShowPassword = () => {
+    setShowPassword(!showpassword);
+  };
+  //below function is written for hide password after click on eye button
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -131,30 +144,63 @@ export default function SignIn() {
             noValidate
             sx={{ mt: 1 }}
           >
+            <InputLabel sx={{ mt: 1 }}>Username</InputLabel>
             <TextField
               margin="normal"
               required
               fullWidth
               id="uname"
-              label="Username Address"
+              placeholder="Username "
               name="uname"
               value={uname}
               onChange={(e) => setUname(e.target.value)}
               // autoComplete="uname"
               // autoFocus
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              placeholder="Password"
               type="password"
               id="password"
               value={pass}
               onChange={(e) => setPass(e.target.value)}
               // autoComplete="current-password"
+            /> */}
+            <InputLabel sx={{ mt: 0.6, mb: 0.8 }}>
+              {' '}
+              Password
+              {/* {displayupdatepass ? (
+                <span style={{ marginLeft: 5 }}>*</span>
+              ) : null} */}
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              fullWidth
+              type={showpassword ? 'text' : 'password'}
+              sx={{ mt: 1 }}
+              placeholder="Current Password"
+              // error={!!currentpassworderr}
+              value={pass}
+              onChange={(e) => setPass(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showpassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
+            {/* <FormHelperText error={!!currentpassworderr}>
+              {currentpassworderr ? currentpassworderrtext : null}
+            </FormHelperText> */}
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -167,17 +213,41 @@ export default function SignIn() {
             >
               Login
             </Button>
-            <Grid container>
-              <Grid item xs sx={{ cursor: 'pointer', textAlign: 'center' }}>
-                <Link variant="body2" onClick={() => router.push('/')}>
+            <Grid container justifyContent={'space-between'}>
+              <Grid
+                item
+                onClick={() => router.push('/')}
+                xs
+                sx={{ '&:hover': { textDecoration: 'underline' } }}
+              >
+                <a
+                  style={{
+                    color: 'blue',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                  }}
+                >
                   Goto login page
+                </a>
+              </Grid>
+              <Grid
+                item
+                sx={{
+                  '&:hover': { textDecoration: 'underline' },
+                }}
+              >
+                <Link href="/forgotpass/employee">
+                  <a
+                    style={{
+                      color: 'blue',
+                      textDecoration: 'none',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Forgot password?
+                  </a>
                 </Link>
               </Grid>
-              {/* <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid> */}
             </Grid>
           </Box>
         </Box>

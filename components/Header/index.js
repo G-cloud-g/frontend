@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 const pages = ['Products', 'Pricing', 'Blog'];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Header = () => {
+const Header = ({ user }) => {
   const [open, setOpen] = useState(false);
   const [userType, setUserType] = useState(null);
   const router = useRouter();
@@ -56,6 +56,7 @@ const Header = () => {
   //     router.push('/profile');
   //   }
   // };
+  // console.log('router.pathname ', user);
   return (
     <AppBar
       position="static"
@@ -153,22 +154,28 @@ const Header = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {open ? (
-              !(router.pathname === '/EmployeeLogin') && (
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  sx={{ color: '#fff' }}
-                  onClick={() =>
-                    router.pathname === '/'
-                      ? router.push('/AdminLogin')
-                      : router.push('/EmployeeLogin')
-                  }
-                >
-                  {router.pathname === '/'
-                    ? 'Admin or Employee login'
-                    : 'Employee login'}
-                </Button>
-              )
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{ color: '#fff' }}
+                onClick={() =>
+                  router.pathname === '/' ||
+                  router.pathname === '/signup' ||
+                  router.pathname.split('/')[2] === `[id]` ||
+                  router.pathname === '/EmployeeLogin'
+                    ? router.push('/AdminLogin')
+                    : router.push('/EmployeeLogin')
+                }
+              >
+                {router.pathname === '/' ||
+                router.pathname === '/signup' ||
+                router.pathname.split('/')[2] === `[id]`
+                  ? // router.pathname === '/EmployeeLogin'
+                    'Admin or Employee login'
+                  : router.pathname === '/EmployeeLogin'
+                  ? 'Admin login'
+                  : 'Employee Login'}
+              </Button>
             ) : (
               <>
                 <Tooltip title="Open settings">

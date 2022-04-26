@@ -105,7 +105,7 @@ function ResetToken(props) {
         newPass: pwd,
         email,
       };
-      if (user === 'student') {
+      if (user) {
         await axios
           .patch(
             `http://${process.env.NEXT_PUBLIC_BASEURL_API}/${user}/resetpwd`,
@@ -138,38 +138,39 @@ function ResetToken(props) {
               },
             });
           });
-      } else {
-        await axios
-          .patch(
-            `http://${process.env.NEXT_PUBLIC_BASEURL_API}/expert/resetpwd`,
-            credentials
-            // user,
-          )
-          .then((response) => {
-            // console.log('response ', response.data);
-
-            dispatch({
-              type: 'UPDATE_SNACK',
-              payload: {
-                snackbar: true,
-                message: response.data.message,
-                type: 'success',
-              },
-            });
-            router.push(`/`);
-          })
-          .catch((err) => {
-            // console.log('err.response ', err.response);
-            dispatch({
-              type: 'UPDATE_SNACK',
-              payload: {
-                snackbar: true,
-                message: err.response?.data?.error,
-                type: 'error',
-              },
-            });
-          });
       }
+      // else {
+      //   await axios
+      //     .patch(
+      //       `http://${process.env.NEXT_PUBLIC_BASEURL_API}/expert/resetpwd`,
+      //       credentials
+      //       // user,
+      //     )
+      //     .then((response) => {
+      //       // console.log('response ', response.data);
+
+      //       dispatch({
+      //         type: 'UPDATE_SNACK',
+      //         payload: {
+      //           snackbar: true,
+      //           message: response.data.message,
+      //           type: 'success',
+      //         },
+      //       });
+      //       router.push(`/`);
+      //     })
+      //     .catch((err) => {
+      //       // console.log('err.response ', err.response);
+      //       dispatch({
+      //         type: 'UPDATE_SNACK',
+      //         payload: {
+      //           snackbar: true,
+      //           message: err.response?.data?.error,
+      //           type: 'error',
+      //         },
+      //       });
+      //     });
+      // }
     }
   };
 
