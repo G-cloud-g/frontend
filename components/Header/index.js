@@ -12,11 +12,14 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { ConfirmationModal } from '../../src/utils/ConfirmationModal';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Header = ({ user }) => {
+  const modalContext = ConfirmationModal();
+
   const [open, setOpen] = useState(false);
   const [userType, setUserType] = useState(null);
   const router = useRouter();
@@ -45,6 +48,25 @@ const Header = ({ user }) => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const handleConvert = () => {
+    modalContext
+      .showConfirmation({
+        Title: 'Are you sure you want to Covert your account into expert?',
+      })
+      .then((result) => {
+        if (result) {
+          setAnchorElUser(null);
+          // localStorage.clear();
+          // cookies.remove('token', { domain: '.intely.io' });
+          // window.location.replace(
+          //   process.env.REACT_APP_INTELY_PLATFORM_EXTERNAL_HOST
+          // );
+        }
+      })
+      .catch((err) => {
+        setAnchorElUser(null);
+      });
   };
   // const onhandleClick = (val) => {
   //   console.log('val ', val);
@@ -162,9 +184,9 @@ const Header = ({ user }) => {
                   router.pathname === '/' ||
                   router.pathname === '/signup' ||
                   router.pathname.split('/')[2] === `[id]` ||
-                  router.pathname === '/EmployeeLogin'
-                    ? router.push('/AdminLogin')
-                    : router.push('/EmployeeLogin')
+                  router.pathname === '/employeelogin'
+                    ? router.push('/adminlogin')
+                    : router.push('/employeelogin')
                 }
               >
                 {router.pathname === '/' ||
@@ -172,7 +194,7 @@ const Header = ({ user }) => {
                 router.pathname.split('/')[2] === `[id]`
                   ? // router.pathname === '/EmployeeLogin'
                     'Admin or Employee login'
-                  : router.pathname === '/EmployeeLogin'
+                  : router.pathname === '/employeelogin'
                   ? 'Admin login'
                   : 'Employee Login'}
               </Button>
@@ -214,11 +236,24 @@ const Header = ({ user }) => {
                     <MenuItem
                       onClick={() => {
                         handleCloseUserMenu();
-                        router.push('/createEmployee');
+                        router.push('/createemployee');
                       }}
                     >
                       <Typography textAlign="center">
                         Create Employee
+                      </Typography>
+                    </MenuItem>
+                  )}
+                  {userType == 0 && (
+                    <MenuItem
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        // router.push('/dashboard');
+                        handleConvert();
+                      }}
+                    >
+                      <Typography textAlign="center">
+                        Convert to Expert
                       </Typography>
                     </MenuItem>
                   )}
@@ -229,7 +264,7 @@ const Header = ({ user }) => {
                     }}
                   >
                     <Typography textAlign="center">Account</Typography>
-                  </MenuItem>{' '}
+                  </MenuItem>
                   <MenuItem
                     onClick={() => {
                       handleCloseUserMenu();

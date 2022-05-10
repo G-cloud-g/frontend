@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
 import styles from '../../styles/Login.module.css';
-import Link from 'next/link';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import StudentLogin from './Student/StudentLogin';
 import ExpertLogin from './Expert/ExpertLogin';
 const Login = () => {

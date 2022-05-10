@@ -11,18 +11,25 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
+import createTheme from '@mui/material/styles/createTheme';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import {
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-
+// import {
+//   IconButton,
+//   InputAdornment,
+//   InputLabel,
+//   OutlinedInput,
+// } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+// import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 const Copyright = (props) => {
   return (
     <Typography
