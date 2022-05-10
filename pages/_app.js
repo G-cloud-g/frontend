@@ -10,15 +10,14 @@ import { Provider } from 'react-redux';
 import store from '/src/Redux/store';
 import SnackBar from '/src/utils/SnackBar';
 import { useRouter } from 'next/router';
-import '../node_modules/react-perfect-scrollbar/dist/css/styles.css';
-
+import ConfirmationModal from '../src/utils/ConfirmationModal';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('token'));
+    if (!localStorage.getItem('token')) router.push('/');
     else router.push('/dashboard');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -28,14 +27,15 @@ export default function MyApp(props) {
     <CacheProvider value={emotionCache}>
       <Head>
         <title>Expert Advice</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <Provider store={store}>
           <SnackBar />
-          <Component {...pageProps} />
+          <ConfirmationModal>
+            <Component {...pageProps} />
+          </ConfirmationModal>
         </Provider>
       </ThemeProvider>
     </CacheProvider>
